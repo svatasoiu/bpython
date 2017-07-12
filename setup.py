@@ -205,6 +205,10 @@ data_files = [
 ]
 data_files.extend(man_pages)
 
+for file in os.listdir("."):
+    if file.endswith(".theme"):
+        data_files.append((os.path.join('share', 'themes'), [file]))
+
 install_requires = [
     'pygments',
     'requests',
@@ -260,6 +264,11 @@ for language in os.listdir(translations_dir):
     if os.path.exists(os.path.join(translations_dir, mo_subpath)):
         mo_files.append(mo_subpath)
 
+theme_files = []
+for file in os.listdir("."):
+    if file.endswith(".theme"):
+        theme_files.append(file)
+print(theme_files)
 setup(
     name="bpython",
     version=version,
@@ -278,7 +287,8 @@ setup(
     package_data={
         'bpython': ['sample-config'],
         'bpython.translations': mo_files,
-        'bpython.test': ['test.config', 'test.theme']
+        'bpython.test': ['test.config', 'test.theme'],
+        'bpython.themes': theme_files
     },
     entry_points=entry_points,
     cmdclass=cmdclass,
